@@ -4,29 +4,34 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+//@DynamicInsert
+//@DynamicUpdate
 @Data
-@Entity
 @Table(name = "t_user")
 @NoArgsConstructor
 @AllArgsConstructor
-//@DynamicInsert
-//@DynamicUpdate
+@Entity
 public class User implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column
     private Long userId;
+    @Column
     private String userName;
+    @Column
     private Integer gender;
+    @Column
     private Long phone;
+    @Column
     private String email;
+    @Column
     private Date createTime;
+    @Column
     private Date updateTime;
 
     public User(String userName, Integer gender, Long phone, String email, Date createTime) {

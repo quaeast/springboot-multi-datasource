@@ -31,5 +31,4 @@ public class UserService {
     public User findById(Long userId) {
         return userRepository.findUserByUserId(userId);
     }
-
 }
