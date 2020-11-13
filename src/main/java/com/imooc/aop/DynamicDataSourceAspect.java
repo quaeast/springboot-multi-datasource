@@ -6,6 +6,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -20,10 +22,14 @@ public class DynamicDataSourceAspect {
 
     @Around("aspect()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        String method = joinPoint.getSignature().getName();
 
-        if (method.startsWith("find") || method.startsWith("select") || method.startsWith("query") || method
-                .startsWith("search")) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        System.out.println("AOP output");
+
+//        String method = joinPoint.getSignature().getName();
+        String userRole = securityContext.getAuthentication().getAuthorities().toString();
+
+        if (userRole.equals("[ROLE_USER]")) {
             DataSourceContextHolder.setDataSource("slaveDataSource");
             log.info("switch to slave datasource...");
         } else {
@@ -37,7 +43,5 @@ public class DynamicDataSourceAspect {
             log.info("清除 datasource router...");
             DataSourceContextHolder.clear();
         }
-
     }
-
 }
