@@ -33,7 +33,7 @@ public class DynamicDataSourceAspect {
 
         try {
             return joinPoint.proceed();
-        }finally {
+        } finally {
             log.info("清除 datasource router...");
             DataSourceContextHolder.clear();
         }
