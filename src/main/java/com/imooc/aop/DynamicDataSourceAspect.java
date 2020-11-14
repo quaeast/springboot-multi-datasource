@@ -6,9 +6,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 @Slf4j
 @Aspect
@@ -26,10 +30,10 @@ public class DynamicDataSourceAspect {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         System.out.println("AOP output");
 
-//        String method = joinPoint.getSignature().getName();
-        String userRole = securityContext.getAuthentication().getAuthorities().toString();
+        Collection<? extends GrantedAuthority> userRole = securityContext.getAuthentication().getAuthorities();
+        Boolean hasRoleUser = userRole.contains(new SimpleGrantedAuthority("ROLE_USER"));
 
-        if (userRole.equals("[ROLE_USER]")) {
+        if (hasRoleUser) {
             DataSourceContextHolder.setDataSource("slaveDataSource");
             log.info("switch to slave datasource...");
         } else {
