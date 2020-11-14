@@ -9,6 +9,7 @@
 
 ## TODO
 
+* 搞清楚AOP的机制，如何定位
 * 补全用户 entity 和 service
 * 选择一种适合 Restful API 的验证方式
 
