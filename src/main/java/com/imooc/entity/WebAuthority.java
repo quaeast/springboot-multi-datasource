@@ -20,10 +20,6 @@ public class WebAuthority implements GrantedAuthority {
 
     private final String role;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorities")
-    private Set<WebUser> users = new HashSet<>();
-
-
     @Override
     public String getAuthority() {
         return role;

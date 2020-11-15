@@ -5,12 +5,9 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @RequiredArgsConstructor
 public class WebUser implements UserDetails {
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +26,13 @@ public class WebUser implements UserDetails {
     private final String username;
     private final String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<WebAuthority> authorities = new HashSet<>();
+    //?? lazy not work ??
+    @OneToMany(fetch = FetchType.EAGER)
+    private final Set<WebAuthority> authorities = new HashSet<>();
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+    public Collection<WebAuthority> getAuthorities() {
+        return authorities;
     }
 
     @Override
