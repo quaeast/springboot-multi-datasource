@@ -31,6 +31,7 @@ public class WebUserController {
 
     @GetMapping
     public String registerForm() {
+
         return "registration";
     }
 

@@ -29,13 +29,14 @@ public class DynamicDataSourceAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        System.out.println("AOP output");
 
         Collection<? extends GrantedAuthority> userRole = securityContext.getAuthentication().getAuthorities();
         Boolean hasRoleUser = userRole.contains(new WebAuthority("ROLE_USER"));
+        System.out.println("---------AOP output-------");
+        System.out.println(securityContext.getAuthentication().isAuthenticated());
         System.out.println(userRole);
 
-        if (hasRoleUser) {
+        if (!hasRoleUser) {
             DataSourceContextHolder.setDataSource("slaveDataSource");
             log.info("switch to slave datasource...");
         } else {

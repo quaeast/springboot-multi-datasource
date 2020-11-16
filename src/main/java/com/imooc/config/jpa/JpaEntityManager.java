@@ -57,9 +57,12 @@ public class JpaEntityManager {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(EntityManagerFactoryBuilder builder) {
         // 不明白为什么这里获取不到 application.yml 里的配置
         Map<String, String> properties = jpaProperties.getProperties();
+        System.out.println("----------propertykey------------------");
+        System.out.println(properties.keySet());
         //要设置这个属性，实现 CamelCase -> UnderScore 的转换
         properties.put("hibernate.physical_naming_strategy",
                 "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy");
+        properties.put("hibernate.ddl-auto", "update");
 
         return builder
                 .dataSource(routingDataSource())//关键：注入routingDataSource
