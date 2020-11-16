@@ -21,19 +21,19 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column
+
     private Long userId;
-    @Column
+
     private String userName;
-    @Column
+
     private Integer gender;
-    @Column
+
     private Long phone;
-    @Column
+
     private String email;
-    @Column
+
     private Date createTime;
-    @Column
+
     private Date updateTime;
 
     public User(String userName, Integer gender, Long phone, String email, Date createTime) {
