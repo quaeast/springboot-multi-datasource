@@ -1,12 +1,17 @@
 package com.imooc.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
 
 @Data
 @Entity
@@ -19,6 +24,19 @@ public class WebAuthority implements GrantedAuthority {
     private Long id;
 
     private final String role;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof WebAuthority) {
+            return role.equals(((WebAuthority) obj).role);
+        }
+
+        return false;
+    }
 
     @Override
     public String getAuthority() {

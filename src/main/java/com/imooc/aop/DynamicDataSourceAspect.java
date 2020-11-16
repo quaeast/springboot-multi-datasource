@@ -1,6 +1,7 @@
 package com.imooc.aop;
 
 import com.imooc.config.datasource.DataSourceContextHolder;
+import com.imooc.entity.WebAuthority;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,7 +32,8 @@ public class DynamicDataSourceAspect {
         System.out.println("AOP output");
 
         Collection<? extends GrantedAuthority> userRole = securityContext.getAuthentication().getAuthorities();
-        Boolean hasRoleUser = userRole.contains(new SimpleGrantedAuthority("ROLE_USER"));
+        Boolean hasRoleUser = userRole.contains(new WebAuthority("ROLE_USER"));
+        System.out.println(userRole);
 
         if (hasRoleUser) {
             DataSourceContextHolder.setDataSource("slaveDataSource");
