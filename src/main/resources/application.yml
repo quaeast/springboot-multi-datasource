@@ -1,11 +1,12 @@
 spring:
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    generate-ddl: true
+      ddl-auto: create-drop
+#      naming:
+#        physical-strategy: "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy"
 
   datasource:   #多数据源配置
     master:
@@ -19,9 +20,6 @@ spring:
       password: 123456@Abcdefg
       driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
-
-
 
 
 

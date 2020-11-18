@@ -13,7 +13,7 @@ import java.util.Date;
 @DynamicInsert
 @DynamicUpdate
 @Data
-@Table(name = "t_user")
+//@Table(name = "t_user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
